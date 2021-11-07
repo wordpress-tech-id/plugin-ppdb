@@ -9,7 +9,7 @@ if(!function_exists('homeMenu')){
             'manage_options',
             'ppdb',
             'homeController',
-            'dashicons-admin-generic'
+            'dashicons-admin-generic',
             20
         );
     }
