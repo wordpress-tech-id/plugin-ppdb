@@ -9,7 +9,7 @@ if(!function_exists('homeMenu')){
             'manage_options',
             'ppdb',
             'homeController',
-            'dashicons-admin-generic',
+            'dashicons-admin-generic'
             20
         );
     }
@@ -24,7 +24,7 @@ if(!function_exists('gelombangMenu')){
             'Gelombang',
             'manage_options',
             'ppdb-gelombang',
-            'gelombangController',
+            'gelombangController'
         );
     }
 }
@@ -38,7 +38,7 @@ if(!function_exists('tahunAjaranMenu')){
             'Tahun Ajaran',
             'manage_options',
             'ppdb-tahun-ajaran',
-            'tahunAjaranController',
+            'tahunAjaranController'
         );
     }
 }
@@ -52,7 +52,7 @@ if(!function_exists('pendidikanMenu')){
             'Jenis Pendidikan',
             'manage_options',
             'ppdb-pendidikan',
-            'pendidikanController',
+            'pendidikanController'
         );
     }
 }
