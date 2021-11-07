@@ -1,7 +1,7 @@
 <?php
     require_once "../functions/formatter.php";
     header("Content-type: application/vnd-ms-excel");
-    header("Content-Disposition: attachment; filename=Data Pegawai.xls");
+    header("Content-Disposition: attachment; filename=Data Pendaftar.xls");
 ?>
 <!DOCTYPE html>
 <html lang="en">
