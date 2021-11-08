@@ -39,9 +39,9 @@ Anda bisa menambahkan formulir pendaftaran di halaman Page atau Post Anda dengan
 
 ### Pengembang
 Plugin ini dikembangkan oleh: 
-Mulyawan Sentosa
-Email: development@flazhost.com
-Web: <a href="https://flazhost.com">FlazHost.Com</a>
-HP/WA: 085283511440
+- Mulyawan Sentosa
+- Email: development@flazhost.com
+- Web: <a href="https://flazhost.com">FlazHost.Com</a>
+- HP/WA: 085283511440
 
 Kami melayani pengembangan Plugin Custome yang dapat disesuaikan dengan kebutuhan Anda.
