@@ -37,3 +37,11 @@ Anda bisa menambahkan formulir pendaftaran di halaman Page atau Post Anda dengan
 ### Formulir Pendaftaran
 <img src="https://github.com/wordpress-tech-id/plugin-ppdb/blob/master/images/screenshots/form-pendaftaran.png?raw=true" />
 
+### Pengembang
+Plugin ini dikembangkan oleh: 
+Mulyawan Sentosa
+Email: development@flazhost.com
+Web: <a href="https://flazhost.com">FlazHost.Com</a>
+HP/WA: 085283511440
+
+Kami melayani pengembangan Plugin Custome yang dapat disesuaikan dengan kebutuhan Anda.
