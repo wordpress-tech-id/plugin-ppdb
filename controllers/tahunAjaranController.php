@@ -34,6 +34,7 @@ if(!function_exists('tahunAjaranController')){
                 $find = find('ppdb_tahun_ajarans',$_GET['id']);            
             }else if(isset($_GET['action']) && $_GET['action'] == 'delete'){
                 destroy('ppdb_tahun_ajarans',$_GET['id']);
+                wp_redirect(ADMIN_PAGE.'ppdb-tahun-ajaran');
             }
         }
 

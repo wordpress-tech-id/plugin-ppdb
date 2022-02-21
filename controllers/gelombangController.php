@@ -43,6 +43,7 @@ if(!function_exists('gelombangController')){
                 $find = find('ppdb_gelombangs',$_GET['id']);            
             }else if(isset($_GET['action']) && $_GET['action'] == 'delete'){
                 destroy('ppdb_gelombangs',$_GET['id']);
+                wp_redirect(ADMIN_PAGE.'ppdb-gelombang');
             }
         }
 
