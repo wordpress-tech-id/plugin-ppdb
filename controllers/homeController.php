@@ -33,6 +33,62 @@ if(!function_exists('homeController')){
         $ibu_lahir_tgl = (isset($_POST['ibu_lahir_tgl']) && $_POST['ibu_lahir_tgl'] !== '') ? $_POST['ibu_lahir_tgl'] : '';
         $ibu_pekerjaan = (isset($_POST['ibu_pekerjaan']) && $_POST['ibu_pekerjaan'] !== '') ? $_POST['ibu_pekerjaan'] : '';
         $keterangan = (isset($_POST['keterangan']) && $_POST['keterangan'] !== '') ? $_POST['keterangan'] : '';
+        //FILTER
+        $nama = (isset($_GET['nama']) && $_GET['nama'] !== '') ? $_GET['nama'] : '';
+        $tahun_ajaran = (isset($_GET['tahun_ajaran_id']) && $_GET['tahun_ajaran_id'] !== '') ? $_GET['tahun_ajaran_id'] : '';
+        if($tahun_ajaran == 'Semua'){
+            $tahun_ajaran_query = '';
+            $q_gelombang_tahun_ajaran = '';
+        }else{
+            $tahun_ajaran_query = "AND ppdb_gelombangs.tahun_ajaran_id = '$tahun_ajaran'";            
+            $q_gelombang_tahun_ajaran = "AND tahun_ajaran_id = '$tahun_ajaran'";
+        }
+        $pendidikan = (isset($_GET['siswa_pendidikan_id']) && $_GET['siswa_pendidikan_id'] !== '') ? $_GET['siswa_pendidikan_id'] : '';
+        if($pendidikan == 'Semua'){
+            $pendidikan_query = '';
+            $q_gelombang_pendidikan = '';
+        }else{
+            $pendidikan_query = "AND ppdb_pendaftars.siswa_pendidikan_id = '$pendidikan'";            
+            $q_gelombang_pendidikan = "AND pendidikan_id = '$pendidikan'";
+        }
+        $gelombang = (isset($_GET['gelombang']) && $_GET['gelombang'] !== '') ? $_GET['gelombang'] : '';
+        $gelombang_val = $gelombang;
+        if($gelombang == 'Semua'){
+            $gelombang_query = '';
+            $q_gelombang = "WHERE 1=1";
+        }else{
+            $gelombang_query = "AND ppdb_pendaftars.gelombang_id LIKE '%$gelombang%'";
+            $q_gelombang = "WHERE gelombang = '$gelombang'";
+        }
+        $q_find_gelombang = "
+            SELECT
+                id
+            FROM
+                ppdb_gelombangs
+            $q_gelombang
+            $q_gelombang_tahun_ajaran
+            $q_gelombang_pendidikan
+        ";
+        $gelombang = query($q_find_gelombang);
+
+        if($gelombang == 'Semua'){
+            $gelombang_query = '';
+        }else{
+            if(count($gelombang) > 0){
+                if(count($gelombang) > 1){
+                    $gelombang_arras = [];
+                    foreach($gelombang as $gel){
+                        $gelombang_arras[] = "ppdb_pendaftars.gelombang_id LIKE '%$gel->id%'";
+                    }
+                    $gelombang_query = "AND (".implode(" OR ",$gelombang_arras).")";
+                }else{
+                    $idgel = $gelombang[0]->id;
+                    $gelombang_query = "AND ppdb_pendaftars.gelombang_id LIKE '%$idgel%'";
+                }
+            }else{
+                $gelombang_query = '';
+            }
+        }
         $data = [
             'gelombang_id' => $gelombang_id,
             'siswa_nama_lengkap' => $siswa_nama_lengkap,
@@ -127,40 +183,75 @@ if(!function_exists('homeController')){
         }
 
         //MENGAMBIL DATA UNTUK DITAMPILKAN
-        $query = "
-            SELECT 
-                ppdb_pendaftars.*,
-                ppdb_gelombangs.gelombang,
-                ppdb_tahun_ajarans.tahun_ajaran,
-                ppdb_pendidikans.pendidikan
-            FROM 
-                ppdb_pendaftars
-            LEFT JOIN
-                ppdb_gelombangs
-            ON
-                ppdb_pendaftars.gelombang_id = ppdb_gelombangs.id
-            LEFT JOIN
-                ppdb_tahun_ajarans
-            ON
-                ppdb_gelombangs.tahun_ajaran_id = ppdb_tahun_ajarans.id
-            LEFT JOIN
-                ppdb_pendidikans
-            ON
-                ppdb_gelombangs.pendidikan_id = ppdb_pendidikans.id;
-        ";
-        $results = query($query);
-        $pendidikans = get('ppdb_pendidikans');
-        $tahun_ajarans = get('ppdb_tahun_ajarans',"status = 1");
-        $condition = '';
-        if(isset($_GET['siswa_pendidikan_id']) && isset($_GET['tahun_ajaran_id'])){
-            $condition = "pendidikan_id = ".$_GET['siswa_pendidikan_id']." AND tahun_ajaran_id = ".$_GET['tahun_ajaran_id'];
+        if(isset($_GET['nama']) && isset($_GET['siswa_pendidikan_id']) && isset($_GET['gelombang']) && isset($_GET['tahun_ajaran_id'])){
+            $query = "
+                SELECT 
+                    ppdb_pendaftars.*,
+                    ppdb_gelombangs.gelombang,
+                    ppdb_tahun_ajarans.tahun_ajaran,
+                    ppdb_pendidikans.lembaga,
+                    ppdb_pendidikans.pendidikan,
+                    ppdb_pendidikans.alamat,
+                    ppdb_pendidikans.logo
+                FROM 
+                    ppdb_pendaftars
+                LEFT JOIN
+                    ppdb_gelombangs
+                ON
+                    ppdb_pendaftars.gelombang_id = ppdb_gelombangs.id
+                LEFT JOIN
+                    ppdb_tahun_ajarans
+                ON
+                    ppdb_gelombangs.tahun_ajaran_id = ppdb_tahun_ajarans.id
+                LEFT JOIN
+                    ppdb_pendidikans
+                ON
+                    ppdb_gelombangs.pendidikan_id = ppdb_pendidikans.id
+                WHERE
+                    ppdb_pendaftars.siswa_nama_lengkap LIKE '%$nama%'
+                $pendidikan_query
+                $gelombang_query
+                $tahun_ajaran_query
+                    ;
+            ";
+        }else{
+            $query = "
+                SELECT 
+                    ppdb_pendaftars.*,
+                    ppdb_gelombangs.gelombang,
+                    ppdb_tahun_ajarans.tahun_ajaran,
+                    ppdb_pendidikans.lembaga,
+                    ppdb_pendidikans.pendidikan,
+                    ppdb_pendidikans.alamat,
+                    ppdb_pendidikans.logo
+                FROM 
+                    ppdb_pendaftars
+                LEFT JOIN
+                    ppdb_gelombangs
+                ON
+                    ppdb_pendaftars.gelombang_id = ppdb_gelombangs.id
+                LEFT JOIN
+                    ppdb_tahun_ajarans
+                ON
+                    ppdb_gelombangs.tahun_ajaran_id = ppdb_tahun_ajarans.id
+                LEFT JOIN
+                    ppdb_pendidikans
+                ON
+                    ppdb_gelombangs.pendidikan_id = ppdb_pendidikans.id
+            ";
         }
-        $gelombangs = get('ppdb_gelombangs',$condition);
+        $results = query($query);
+        $pendidikans = getDistinct('ppdb_pendidikans','',['id','pendidikan']);
+        $tahun_ajarans = getDistinct('ppdb_tahun_ajarans',"status = 1",['id','tahun_ajaran']);
+        $condition = '';
+        $gelombangs = getDistinct('ppdb_gelombangs', '', ['gelombang']);
 
         if(isset($_GET['action']) && $_GET['action'] == 'export'){
-            exportTablePage($results);
+            exportTablePage($results, $nama, $tahun_ajarans, $tahun_ajaran, $gelombangs, $gelombang_val, $pendidikans, $pendidikan);
+        }if(isset($_GET['action']) && $_GET['action'] == 'print'){
+            printFormulirPage($results, $nama, $tahun_ajarans, $tahun_ajaran, $gelombangs, $gelombang_val, $pendidikans, $pendidikan);
         }else{
-            homePage($results, $find, $tahun_ajarans, $gelombangs, $pendidikans);
+            homeTablePage($results, $nama, $tahun_ajarans, $tahun_ajaran, $gelombangs, $gelombang_val, $pendidikans, $pendidikan);
         }
     }
 }

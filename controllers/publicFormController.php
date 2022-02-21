@@ -53,7 +53,6 @@ if(!function_exists('publicFormController')){
             'ibu_pekerjaan' => $ibu_pekerjaan,
             'keterangan' => $keterangan
         ];
-        var_dump($data);
         if(
             $gelombang_id && 
             $siswa_nama_lengkap && 

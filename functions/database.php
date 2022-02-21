@@ -8,6 +8,9 @@ if(!function_exists('createTable')){
                 ppdb_pendidikans (
                     id int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                     pendidikan char(20),
+                    lembaga char(150),
+                    lembaga alamat(255),
+                    lembaga logo(255),
                     keterangan char(100) DEFAULT NULL
                 );
         ";
@@ -38,6 +41,7 @@ if(!function_exists('createTable')){
                     keterangan char(100) DEFAULT NULL
                 );
         ";
+        
         $pendaftar = "
             CREATE TABLE
                 ppdb_pendaftars (
@@ -64,7 +68,9 @@ if(!function_exists('createTable')){
                     ibu_lahir_tmpt char(50),
                     ibu_lahir_tgl datetime,
                     ibu_pekerjaan char(50),
-                    keterangan char(100) DEFAULT NULL
+                    keterangan char(100),
+                    tanggal_daftar datetime,
+                    tanggal_update datetime DEFAULT NULL
                 );
         ";
         $result0 = $wpdb->query($pendidikan);
@@ -100,6 +106,13 @@ if(!function_exists('createTable')){
         global $wpdb;
         $where = ($condition != null || $condition != '') ? " AND ".$condition : '';
         $query = "SELECT * FROM ".$tableName." WHERE 1".$where;
+        return $wpdb->get_results($query);
+    }
+    function getDistinct($tableName = null, $condition = null, $columns = []){
+        global $wpdb;
+        $column = implode(', ',$columns);
+        $where = ($condition != null || $condition != '') ? " AND ".$condition : '';
+        $query = "SELECT DISTINCT $column FROM ".$tableName." WHERE 1".$where." GROUP BY ".$column;
         return $wpdb->get_results($query);
     }
     function insert($table, $data){

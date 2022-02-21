@@ -16,11 +16,23 @@ if(!function_exists('pendidikanPage')){
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <form action="" method="POST">
+                        <form action="" method="POST" enctype='multipart/form-data'>
                             <input type="hidden" name="id" value="<?php echo (isset($data->id)) ? $data->id : ''; ?>" / >
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Pendidikan</label>
                                 <input type="text" class="form-control form-control-lg" id="pendidikan" aria-describedby="pendidikan" placeholder="Pendidikan" name="pendidikan" value="<?php echo (isset($data->pendidikan)) ? $data->pendidikan : ''; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nama Lembaga</label>
+                                <input type="text" class="form-control form-control-lg" id="lembaga" aria-describedby="lembaga" placeholder="Lembaga" name="lembaga" value="<?php echo (isset($data->lembaga)) ? $data->lembaga : ''; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Alamat</label>
+                                <input type="text" class="form-control form-control-lg" id="alamat" aria-describedby="alamat" placeholder="Alamat" name="alamat" value="<?php echo (isset($data->alamat)) ? $data->alamat : ''; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Logo</label>
+                                <input type="file" class="form-control form-control-lg" id="logo" aria-describedby="logo" placeholder="Logo" name="logo" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Keterangan</label>
@@ -49,6 +61,9 @@ if(!function_exists('pendidikanPage')){
                                 <tr>
                                 <th style="width: 4%" class="text-center">No.</th>
                                 <th style="width: 20%" class="text-center">Pendidikan</th>
+                                <th style="width: 20%" class="text-center">Nama Lembaga</th>
+                                <th style="width: 20%" class="text-center">Alamat</th>
+                                <th style="width: 20%" class="text-center">Logo</th>
                                 <th style="width: 20%" class="text-center">Keterangan</th>
                                 <th style="width: 20%" class="text-center">Aksi</th>
                                 </tr>
@@ -61,6 +76,9 @@ if(!function_exists('pendidikanPage')){
                                 <tr>
                                     <td class="text-center"><?php echo $no++; ?></td>
                                     <td class="text-center"><?php echo $data->pendidikan; ?></td>
+                                    <td class="text-center"><?php echo $data->lembaga; ?></td>
+                                    <td class="text-center"><?php echo $data->alamat; ?></td>
+                                    <td class="text-center"><?php echo $data->logo; ?></td>
                                     <td class="text-center"><?php echo $data->keterangan; ?></td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group" aria-label="Aksi">

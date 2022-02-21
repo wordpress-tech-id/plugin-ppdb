@@ -4,13 +4,27 @@ add_action('admin_menu', 'homeMenu');
 if(!function_exists('homeMenu')){
     function homeMenu(){
         add_menu_page(
-            'Penerimaan Peserta Didik Baru',
+            'Data Peserta Didik Baru',
             'PPDB',
             'manage_options',
             'ppdb',
             'homeController',
             'dashicons-admin-generic',
             20
+        );
+    }
+}
+
+add_action('admin_menu', 'homeFormMenu');
+if(!function_exists('homeFormMenu')){
+    function homeFormMenu(){
+        add_submenu_page(
+            'ppdb',
+            'Form Peserta Didik Baru',
+            'Add New',
+            'manage_options',
+            'ppdb-form',
+            'homeFormController'
         );
     }
 }
