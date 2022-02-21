@@ -32,7 +32,7 @@ if(!function_exists('pendidikanPage')){
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Logo</label>
-                                <input type="file" class="form-control form-control-lg" id="logo" aria-describedby="logo" placeholder="Logo" name="logo" required>
+                                <input type="file" class="form-control form-control-lg" id="logo" aria-describedby="logo" placeholder="Logo" name="logo" <?php echo (!isset($_GET['id'])) ? 'required' : '' ?>>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Keterangan</label>
