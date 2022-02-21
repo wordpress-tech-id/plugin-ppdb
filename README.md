@@ -9,6 +9,7 @@ Adalah plugin untuk mengelola data pendaftaran peserta didik di sekolah setiap m
 5. Formulir Pendaftaran di Sisi Pendaftar
 6. Shortcode Formulir Pendaftaran
 7. Export Hasil Pendaftaran ke Excel
+8. Cetak Formulir Pendaftaran
 
 ## Shortcode
 Anda bisa menambahkan formulir pendaftaran di halaman Page atau Post Anda dengan menambahkan Shortcode berikut:
